@@ -35,6 +35,7 @@
     wl-clipboard
     bibata-cursors
     spaceship-prompt
+    ripgrep
   ];
 
   fonts.fontconfig = {

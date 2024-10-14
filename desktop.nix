@@ -98,6 +98,7 @@
     clang-tools
     nixfmt-rfc-style
     hyprcursor
+    man-pages
   ];
 
   # Fonts
