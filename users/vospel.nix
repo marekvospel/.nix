@@ -34,6 +34,7 @@
     slurp
     wl-clipboard
     bibata-cursors
+    spaceship-prompt
   ];
 
   fonts.fontconfig = {
@@ -61,6 +62,34 @@
 
   home.sessionVariables = {
     EDITOR = "nvim";
+  };
+
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    enableZshIntegration = true;
+    nix-direnv = {
+      enable = true;
+    };
+  };
+
+  programs.zoxide = {
+    enable = true;
+    enableZshIntegration = true;
+  };
+
+  programs.bash.enable = true;
+
+  programs.zsh = {
+    enable = true;
+    autocd = true;
+    initExtra = ''
+      source ${pkgs.spaceship-prompt}/share/zsh/themes/spaceship.zsh-theme;
+    '';
+    oh-my-zsh = {
+      enable = true;
+      plugins = [ "git" ];
+    };
   };
 
   programs.rofi = {

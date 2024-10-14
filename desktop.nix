@@ -51,22 +51,15 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.libinput.enable = true;
+  programs.zsh.enable = true;
 
   users.users.vospel = {
     isNormalUser = true;
     extraGroups = [ "wheel" ];
+    shell = pkgs.zsh;
     packages = with pkgs; [
       neovim-unwrapped
     ];
-  };
-
-  home-manager = {
-    extraSpecialArgs = {
-      inherit inputs;
-    };
-    users = {
-      "vospel" = import ./users/vospel.nix;
-    };
   };
 
   security.doas.enable = true;
@@ -85,7 +78,7 @@
     vim
     git
     tmux
-    neovim
+    neovim-unwrapped
     stow
     htop
     libgcc

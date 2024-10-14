@@ -21,8 +21,6 @@
   boot.initrd.kernelModules = [
     "usbhid"
     "dm-mod"
-    "dm-raid"
-    "raid0"
     "dm-crypt"
     "dm-snapshot"
   ];
@@ -33,12 +31,8 @@
   boot.initrd.services.lvm.enable = true;
 
   boot.initrd.luks = {
-    devices."cryptme0n1p2" = {
-      device = "/dev/disk/by-uuid/81e1a45d-e581-40c9-8698-9655d7a20dd7";
-      preLVM = true;
-    };
-    devices."cryptme1n1p1" = {
-      device = "/dev/disk/by-uuid/4d0a8eed-33d3-4cd5-aae8-627214f57b9a";
+    devices."ssd" = {
+      device = "/dev/disk/by-uuid/146d62b0-7a2e-4eda-bfe4-701a444e1a23";
       preLVM = true;
     };
   };
@@ -51,12 +45,12 @@
   };
 
   fileSystems."/" = {
-    device = "/dev/disk/by-uuid/9ed45e49-78b9-4cab-90d6-74a6da53bbe0";
+    device = "/dev/nvme/root_nixos"; # TODO: use uuid
     fsType = "ext4";
   };
 
   fileSystems."/boot" = {
-    device = "/dev/disk/by-uuid/E8AD-192C";
+    device = "/dev/disk/by-uuid/7394-F8C8";
     fsType = "vfat";
     options = [
       "fmask=0077"
@@ -68,8 +62,8 @@
     { device = "/dev/disk/by-uuid/eb2de450-7a9b-44bc-a366-7b6770bcb161"; }
   ];
 
-  # networking.useDHCP = lib.mkDefault true;
-  networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
+  networking.useDHCP = lib.mkDefault true;
+  # networking.interfaces.enp5s0.useDHCP = lib.mkDefault true;
 
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   hardware.cpu.amd.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;

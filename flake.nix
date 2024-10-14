@@ -12,7 +12,15 @@
   };
 
   outputs =
-    { self, nixpkgs, ... }@inputs:
+    {
+      self,
+      nixpkgs,
+      ...
+    }@inputs:
+    let
+      system = "x86-linux";
+      pkgs = nixpkgs.packages.${system};
+    in
     {
       nixpkgs.overlays = [
         (final: prev: {
@@ -22,12 +30,13 @@
       ];
 
       nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs;
-        };
+        specialArgs = inputs;
         modules = [
           ./desktop.nix
-          inputs.home-manager.nixosModules.default
+          inputs.home-manager.nixosModules.home-manager
+          {
+            home-manager.users.vospel = import ./users/vospel.nix;
+          }
         ];
       };
 
